@@ -1,10 +1,10 @@
 $(document).ready(function(){
   $('#loginForm').submit(function(event){
-    email = $("#email").vall()
+    email = $("#email").val()
     password = $("#password").val()
 
-    if ((email == null || "") || (password == null || "") ){
-    return $("#error").text("Please fill all fields").fadeIn(500).delay(5000).slideUp(500)
+    if ((email == null || " ") || (password == null || " ") ){
+     $("#error").text("Please fill all fields").fadeIn(500).delay(5000).slideUp(500)
     }
 
     $.post('/login',
@@ -16,8 +16,11 @@ $(document).ready(function(){
       if(data.success == true){
         window.location.replace('/')
       }
-      if(data.success == false){
-          return $("#error").text('Invalid email or password').fadeIn(500).delay(5000).slideUp(500)
+      else if(data.success == false){
+         $("#error").text('Invalid email or password').fadeIn(500).delay(5000).slideUp(500)
+      }
+      else{
+        window.location.replace('/signup')
       }
     });
     event.preventDefault()

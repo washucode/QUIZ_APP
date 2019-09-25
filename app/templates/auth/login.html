@@ -3,4 +3,34 @@
 
 {% block content %}
 
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card">
+        <h5 class="card-header info-color white-text text-center py-4">
+          <strong>Sign in</strong>
+        </h5>
+        <div class="card-body px-lg-5 pt-0">
+          <form style="color: #757575" class="text-center" id="loginForm">
+            <div class="md-form">
+              <small id="loginEmail_error"></small>
+              <input type="email" id="materialLoginFormEmail" class="form-control" name="email" id="email">
+              <label for="materialLoginFormEmail">Email</label>
+            </div>
+            <div class="md-form">
+              <small id="password_error"></small>
+              <input type="password" id="materialLoginFormPassword" class="form-control" name="password" id="password">
+              <label for="materialLoginFormPassword">Password</label>
+            </div>
+            <button class="btn btn-outline-info btn-rounded btn-block my-4 wave-effect z-depth-0" type="submit">Sign in</button>
+            <p>Not a member? <a href="#">Register</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+
 {% end block %}

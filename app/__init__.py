@@ -26,5 +26,7 @@ def create_app(configname):
     #initialising the extensions
     db.init_app(app)
     login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
+    login_manager.session_protection = 'strong'
 
     return app

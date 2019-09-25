@@ -4,7 +4,7 @@ $(document).ready(function(){
     password = $("#password").val()
 
     if ((email == null || "") || (password == null || "") ){
-      $("#error").text("Please fill all fields").fadeIn(500).delay(5000).slideUp(500)
+    return $("#error").text("Please fill all fields").fadeIn(500).delay(5000).slideUp(500)
     }
 
     $.post('/login',
@@ -14,10 +14,10 @@ $(document).ready(function(){
     },
     function(data){
       if(data.success == true){
-        window.replace.location('/')
+        window.location.replace('/')
       }
       if(data.success == false){
-        $("#error").text('Invalid email or password').fadeIn(500).delay(5000).slideUp(500)
+          return $("#error").text('Invalid email or password').fadeIn(500).delay(5000).slideUp(500)
       }
     });
     event.preventDefault()

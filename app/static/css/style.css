@@ -13,12 +13,13 @@ body{
 }
 .brand{
     color:#120639;
+    font-size:50px;
    
 }
 
 .nav-item .btn{
     background-color:  #40407a;
-     
+    font-size: 18px;
     border-radius: 8%;
    
 
@@ -26,6 +27,7 @@ body{
  .btn:hover{
     border-color: #706fd3;
     border-radius:0%;
+    color: #40407a;
  }
  
 
@@ -36,4 +38,27 @@ body{
 .navbar.center .navbar-inner .navbar-nav {
     display:inline-block;
     float: none;
+}
+
+.heading{
+    font-family: 'Cabin Sketch', cursive;
+    font-size:120px;
+}
+#otherhalf{
+    color:#2c2c54;
+    font-size: 150px;
+}
+
+.htoplay{
+    color:#5f27cd;
+    font-weight:900;
+    text-decoration: underline;
+
+}
+.submitbtn{
+    background-color:  #120639;
+    font-size: 24px;
+    border-radius: 8%;
+   
+
 }

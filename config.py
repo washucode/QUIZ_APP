@@ -17,7 +17,7 @@ class DevConfig(Config):
     '''
     Development configurations
     '''
-    Debug=True
+    DEBUG=True
 
 config_options = {
     'development':DevConfig,

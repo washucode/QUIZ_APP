@@ -4,7 +4,7 @@ class Config:
     '''
     General configuration options
     '''
-    pass
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 class ProdConfig(Config):
     '''

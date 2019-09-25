@@ -15,7 +15,7 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(255),unique=True,nullable=False)
     email = db.Column(db.String(255),unique=True,nullable=False)
     password_hash = db.Column(db.String,nullable=False)
-    game = db.Relationship('Game',backref='user',lazy='dynamic')
+    game = db.relationship('Game',backref='user',lazy='dynamic')
 
     @property
     def password(self):
@@ -49,7 +49,7 @@ class Game(db.Model):
     award = db.Column(db.String)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     game_password = db.Column(db.String,nullable=False)
-    questions = db.Relationship('Question',backref='game',lazy='dynamic')
+    questions = db.relationship('Question',backref='game',lazy='dynamic')
 
 class Question(db.Model):
     '''
@@ -59,7 +59,7 @@ class Question(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     question = db.Column(db.Text,nullable=False)
     game_id = db.Column(db.Integer,db.ForeignKey('games.id'))
-    choices = db.Relationship('Choices',backref='question',lazy='dynamic')
+    choices = db.relationship('Choices',backref='question',lazy='dynamic')
 
 class Choices(db.Model):
     '''

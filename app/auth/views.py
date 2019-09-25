@@ -6,26 +6,26 @@ from werkzeug.security import generate_password_hash,check_password_hash
 
 @auth.route('/login', methods=['POST','GET'])
 def login():
-    if current_user != None:
-        return redirect('main.index')
+    if current_user.is_authenticated:
+        return render_template('index.html')
     else:
         if request.method == 'POST':
             form = request.form
             email = form.get('email')
             password = form.get('password')
-        user = User.query.filter_by(email = email).first()
-        if user is not None and user.verify_password(password):
-            login_user(user)
-            return jsonify({'success':True})
-        else:
-            return jsonify({'success':False})
+            user = User.query.filter_by(email = email).first()
+            if user is not None and user.verify_password(password):
+                login_user(user)
+                return jsonify({'success':True})
+            else:
+                return jsonify({'success':False})
 
         return render_template('auth/login.html')
 
 @auth.route('/signup', methods=['POST','GET'])
 def signup():
-    if current_user != None:
-        return redirect('main.index')
+    if  current_user.is_authenticated:
+        return render_template('index.html')
     else:
         if request.method == "POST":
             form = request.form

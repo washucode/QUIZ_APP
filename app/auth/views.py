@@ -1,12 +1,12 @@
 from . import auth
 from flask import render_template,jsonify,request,redirect,url_for
 from app.models import User
-from flask_login import login_user,logout_user,login_required,current_user,is_authenticated
+from flask_login import login_user,logout_user,login_required,current_user
 from werkzeug.security import generate_password_hash,check_password_hash
 
 @auth.route('/login', methods=['POST','GET'])
 def login():
-    if current_user.is_authenticated:
+    if current_user != None:
         return redirect('main.index')
     else:
         if request.method == 'POST':
@@ -24,7 +24,7 @@ def login():
 
 @auth.route('/signup', methods=['POST','GET'])
 def signup():
-    if current_user.is_authenticated:
+    if current_user != None:
         return redirect('main.index')
     else:
         if request.method == "POST":
@@ -34,10 +34,10 @@ def signup():
             password = form.get('password')
 
             user = User.query.filter_by(email = email).first()
-            if user =! None:
+            if user != None:
                 return jsonify({'email_err':'Email already taken'})
             user = User.query.filter_by(username = username).first()
-            if user =! None:
+            if user != None:
                 return jsonify({'username_err':'Username already taken'})
             new_user =User(email = email , username=  username, password_hash = generate_password_hash(password))
             return jsonify({'success':True})

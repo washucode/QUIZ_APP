@@ -12,7 +12,7 @@ manager.add_command('server',Server)
 
 @manager.shell
 def create_shell_context():
-    return {'db' : db , 'User' :User , 'Game' : Game , 'Qusetion' : Question , 'Choices' : Choices}
+    return {'db' : db , 'User' :User , 'Game' : Game , 'Question' : Question , 'Choices' : Choices}
 
 if __name__=="__main__":
     manager.run()

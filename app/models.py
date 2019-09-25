@@ -68,6 +68,7 @@ class Choices(db.Model):
     __tablename__='choices'
     id = db.Column(db.Integer,primary_key=True)
     question_id = db.Column(db.Integer,db.ForeignKey('questions.id'))
+    choice = db.Column(db.String,nullable=False)
     status = db.Column(db.Boolean)
     points = db.Column(db.Integer)
     

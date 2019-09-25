@@ -38,6 +38,15 @@ class User(UserMixin,db.Model):
         check_password_hash(self.password_hash,password)
 
 
+class Player(db.Model):
+    '''
+    This class will create the database schema for players
+    '''
+    __tablename__='players'
+    game_id = db.Column(db.Integer,db.ForeignKey('games.id'))
+    player_name = db.Column(db.String,nullable=False)
+    results = db.Column(db.Integer)
+
 class Game(db.Model):
     '''
     This is a class that contains the database schema for the game
@@ -47,9 +56,11 @@ class Game(db.Model):
     gamename = db.Column(db.String(255),nullable=False)
     description = db.Column(db.String)
     award = db.Column(db.String)
+    status = db.Column(db.Boolean)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     game_password = db.Column(db.String,nullable=False)
     questions = db.relationship('Question',backref='game',lazy='dynamic')
+    player = db.relationship('Player',backref='game',lazy='dynamic')
 
 class Question(db.Model):
     '''

@@ -17,26 +17,26 @@ class User(UserMixin,db.Model):
     password_hash = db.Column(db.String,nullable=False)
     game = db.relationship('Game',backref='user',lazy='dynamic')
 
-    @property
-    def password(self):
-        '''
-        Raises error when someone trys to read the password
-        '''
-        raise AttributeError('You cannot read the password attribute')
+    # @property
+    # def password(self):
+    #     '''
+    #     Raises error when someone trys to read the password
+    #     '''
+    #     raise AttributeError('You cannot read the password attribute')
 
-    @password.setter
-    def password(self,password):
-        '''
-        Generates password hash
-        '''
-        self.password_hash = generate_password_hash(password)
-
-    def verify_password(self,password):
-        '''
-        confirms password equal to the password hash during login
-        '''
-        check_password_hash(self.password_hash,password)
-
+    # @password.setter
+    # def password(self,password):
+    #     '''
+    #     Generates password hash
+    #     '''
+    #     self.password_hash = generate_password_hash(password)
+    #
+    # def verify_password(self,password):
+    #     '''
+    #     confirms password equal to the password hash during login
+    #     '''
+    #     check_password_hash(self.password_hash,password)
+    #
 
 class Game(db.Model):
     '''
@@ -70,4 +70,3 @@ class Choices(db.Model):
     question_id = db.Column(db.Integer,db.ForeignKey('questions.id'))
     status = db.Column(db.Boolean)
     points = db.Column(db.Integer)
-    

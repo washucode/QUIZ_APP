@@ -4,35 +4,39 @@ $(document).ready(function(){
     email =$("#email").val()
     password=$("#password").val()
     confirm_password = $("#confirm_password").val()
-
-    if ( (username == null || " ") || (email == null || " ") || ( password == null || " " ) || ( confirm_password == null || " ") ){
-       $("#error").text("please fill all fields")
-    }
-    else if(password != confirm_password){
-      $("#error").hide()
-      $("#confirm_error").text("Passwords dont match")
-    }
-
     $.post('/signup',
     {
       username:username,
       email:email,
-      password:password
+      password:password,
+      confirm_password :confirm_password
     },
     function(data){
+      if(data.pwd_err){
+        $("#password_error").text(data.pwd_err).fadeIn(500)
+        $("#password").css('border','1px solid red')
+        $("#confirm_password").css('border','1px solid red')
+      }else{
+        $("#confirm_password").css('border','1px solid lightgray')
+        $("#password").css('border','1px solid lightgray')
+      }
       if (data.email_err){
+        console.log('lsjalsdjalkdjaslkdjaskldjlaksjklasjdklasjkldjaskl');
+        $("#email_error").text(data.email_err).fadeIn(500).delay(5000).slideUp(500)
+        $("#email").css({'border':'solid 1px red'})
+      }else{
+        $("#email").css({'border':'solid 1px lightgray'})
+      }
+       if(data.username_err){
         $("#error").hide()
-        $("email_error").text(data.email_err).fadeIn(500).delay(5000).slideUp(500)
+        $("#username_error").text(data.username_err).fadeIn(500).delay(5000).slideUp(500)
+        $("#username").css({'border':'solid 1px red'})
+
+      }else{
+        $("#username").css({'border':'solid 1px lightgray'})
       }
-      else if(data.username_err){
-        $("#error").hide()
-        $("username_error").text(data.username_err).fadeIn(500).delay(5000).slideUp(500)
-      }
-      else if(data.success == true){
-        window.location.replace('/')
-      }
-      else{
-        window.location.replace('/signup')
+      if(data.awesome){
+        window.location.replace('/login')
       }
     });
     event.preventDefault()

@@ -17,6 +17,12 @@ def create_app(configname):
     #import configurations
     app.config.from_object(config_options[configname])
 
+    #import and initialise blueprint
+    from .auth import auth as auth_blueprint
+    from .main import main as main_blueprint
+    app.register_blueprint(auth_blueprint)
+    app.register_blueprint(main_blueprint)
+
     #initialising the extensions
     db.init_app(app)
     login_manager.init_app(app)

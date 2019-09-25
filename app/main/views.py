@@ -80,43 +80,50 @@ def create_game(user_id):
         db.session.add(new_game)
         db.session.commit()
         game_id = Game.query.filter_by(gamename=gamename).first()
-        return redirect(url_for('.add_questions',game_id=game_id))
+        return redirect(url_for('.add_questions',game_id=game_id.id))
 
     return render_template('create.html')
 
-@main.route('/questions/<int:game_id>',methods=['POST','GET'])
-def add_questions(game_id):
-    '''
-    This method takes the questions from the Creator and stores it in the db
-    Arg:
-        game_id this will allow querying from the database for the game and store it as a foreign key in the questions object
-    '''
-    current_game = Game.query.filter_by(game_id=game_id).first()
-    if request.method == 'post':
-        question = request.form.get('question')
-        new_question = Question(question=question,game_id=current_game)
-        db.session.add(new_question)
-        db.session.commit()
-        return redirect(url_for('.add_question',game_id=game_id))
+# @main.route('/questions/<int:game_id>',methods=['POST','GET'])
+# def add_questions(game_id):
+#     '''
+#     This method takes the questions from the Creator and stores it in the db
+#     Arg:
+#         game_id this will allow querying from the database for the game and store it as a foreign key in the questions object
+#     '''
+#     current_game = Game.query.filter_by(game_id=game_id).first()
+#     if request.method == 'post':
+#         question = request.form.get('question')
+#         # get choice fieds
+#         new_question = Question(question=question,game_id=current_game)
+#         db.session.add(new_question)
+#         db.session.commit()
+#         saved_questions = Question.query.filter_by(question=question).first()
 
-    return render_template('addquestions.html')
+#         return redirect(url_for('.add_question',game_id=game_id))
 
-@main.route('/choices/<int:question_id>')
-def choices(question_id):
-    '''
-    This method will add the choices to the  database to the questions created
-    Arg:
-        question_id this will allow quering the db to access the question so as to store it as a foreign key in the choices table
-    '''
-    question = Question.query.get(question_id)
-    if request.method == 'post':
-        choice = request.form.get('choice')
-        status = request.form.get('status')
-        points = request.form.get('points')
-        new_choice = Choices(question_id=question,choice=choice,status=status,points=points)
-        db.session.add(new_choice)
-        db.session.commit()
-        return redirect(url_for('.choices',question_id=question_id))
-    return render_template('choices.html',title='Add choices')
+#     return render_template('addquestions.html')
+
+# @main.route('/choices/<int:question_id>')
+# def choices(question_id):
+#     '''
+#     This method will add the choices to the  database to the questions created
+#     Arg:
+#         question_id this will allow quering the db to access the question so as to store it as a foreign key in the choices table
+#     '''
+#     question = Question.query.get(question_id)
+#     if request.method == 'post':
+#         choice = request.form.get('choice')
+#         status = request.form.get('status')
+#         points = request.form.get('points')
+#         new_choice = Choices(question_id=question,choice=choice,status=status,points=points)
+#         db.session.add(new_choice)
+#         db.session.commit()
+#         return redirect(url_for('.choices',question_id=question_id))
+#     return render_template('choices.html',title='Add choices')
+
+# @main.route('/preview')
+# def preview():
+#     questionspreview = Questions.query.get()
 
 

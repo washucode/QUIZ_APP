@@ -43,7 +43,7 @@ class Player(db.Model):
     This class will create the database schema for players
     '''
     __tablename__='players'
-    id = db.Column(db.Integer,db.primary_key=True)
+    id = db.Column(db.Integer,primary_key=True)
     game_id = db.Column(db.Integer,db.ForeignKey('games.id'))
     player_name = db.Column(db.String,nullable=False)
     results = db.Column(db.Integer)

@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin+Sketch&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Carme&display=swap');
+
+body{
+    background-color: #40407a;
+    font-family: 'Carme', sans-serif;
+    color:white;
+}
+
+.navbar-brand{
+   font-family: 'Cabin Sketch', cursive;
+   color:white;
+}
+.brand{
+    color:#120639;
+   
+}
+
+.nav-item .btn{
+    background-color:  #40407a;
+     
+    border-radius: 8%;
+   
+
+}
+ .btn:hover{
+    border-color: #706fd3;
+    border-radius:0%;
+ }
+ 
+
+ .navbar.center .navbar-inner {
+    text-align: center;
+}
+
+.navbar.center .navbar-inner .navbar-nav {
+    display:inline-block;
+    float: none;
+}

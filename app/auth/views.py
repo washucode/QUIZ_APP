@@ -43,3 +43,8 @@ def signup():
             return jsonify({'success':True})
 
         return render_template('auth/signup.html')
+@auth.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')

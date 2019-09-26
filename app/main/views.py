@@ -2,7 +2,7 @@ from . import main
 from flask import render_template,request,redirect,url_for,flash
 from ..models import User,Player,Game,Question,Choices
 from .. import db
-from flask_login import login_required
+from flask_login import login_required,current_user
 
 @main.route('/',methods=['GET','POST'])
 def index():
@@ -62,6 +62,7 @@ def do_questions(game_id,player_id):
     return render_template('doquestions.html',questions = questions,choices=choices,player=player)
 
 @main.route('/creategame/<int:user_id>',methods=['GET','POST'])
+@login_required
 def create_game(user_id):
     '''
     This method takes in game data from the user and stores it in the database
@@ -83,6 +84,21 @@ def create_game(user_id):
         return redirect(url_for('.add_questions',game_id=game_id.id))
 
     return render_template('create.html')
+
+@main.route('/profile/<username>')
+@login_required
+def profile(username):
+    '''
+    This method displays user information and user games
+    Arg:
+        username in order to query the user by username in the db
+    '''
+    user = User.query.filter_by(username=username).first()
+    games = Game.query.filter_by(user_id=user.id).all()
+    
+
+    return render_template ( 'profile.html',user=user,games=games)
+
 
 # @main.route('/questions/<int:game_id>',methods=['POST','GET'])
 # def add_questions(game_id):

@@ -55,7 +55,9 @@ class Game(db.Model):
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     game_password = db.Column(db.String,nullable=False)
     questions = db.relationship('Question',backref='game',lazy='dynamic')
+
     player = db.relationship('Player',backref='game',lazy='dynamic')
+
 
 class Question(db.Model):
     '''
@@ -77,4 +79,3 @@ class Choices(db.Model):
     choice = db.Column(db.String,nullable=False)
     status = db.Column(db.Boolean)
     points = db.Column(db.Integer)
-    

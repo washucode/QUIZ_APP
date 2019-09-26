@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  <script src="{{url_for('static', filename='js/auth/signup.js')}}" ></script>
+<br>
+<br>
+
+  <div class="container mt-5">
+    <div class="row mt-5">
+      <div class="col-md-4 offset-md-4">
+        <form id="signupForm">
+          <h5 class="text-center">SIGN UP</h5>
+          <small id="error" class="text-danger"></small>
+          <div class="form-group">
+            <label for="">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="username" required>
+            <small id="username_error" class="text-danger"></small>
+          </div>
+          <div class="form-group">
+            <label for="">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="email" required>
+            <small id="email_error" class="text-danger"></small>
+          </div>
+          <div class="form-group">
+            <label for="">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="password" required>
+          </div>
+          <div class="form-group">
+            <label for="">Confirm_password</label>
+            <input type="password" class="form-control" id="confirm_password" placeholder="confirm_password" required>
+            <small id="password_error" class="text-danger"></small>
+          </div>
+          <button type="submit" class="btn  btn-block" style = "background-color:#2c2c54">Submit</button>
+        </form>
+        <div class="text-center">
+            <p>Have an account ? <br> <a href="/login" style = "color:white;">Login</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

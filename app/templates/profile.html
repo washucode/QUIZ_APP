@@ -121,15 +121,17 @@
   <br>
   <form id="edit-bio">
     <div class="form-group ">
-      <input type="text" id="bio" name="bio" class=" input form-control form-control-sm" value="Add a bio">
-      <button type="submit" class="btn btn-sm btn-primary">Add</button>
+      <input type="text" id="change-bio" name="change-bio" class=" input form-control form-control-sm" value="{{user.bio}}" required>
+      <button type="submit" class="btn btn-sm btn-primary">update</button>
     </div>
   </form>
   {%else %}
+  <p id="final_bio"></p>
   <br>
-  <form id="bio">
+  <form id="new-bio">
+
     <div class="form-group col-md-7">
-        <input type="text" id="bio" name="bio" class=" input form-control form-control-sm" value="Add a bio">
+        <input type="text" id="bio" name="bio" class=" input form-control form-control-sm" placeholder="Add a bio" required>
       </div>
         <button type="submit" class="btn btn-sm btn-primary">Add</button>
   </form>

@@ -1,5 +1,5 @@
 from . import main
-from flask import render_template,request,redirect,url_for,flash,abort
+from flask import render_template,request,redirect,url_for,flash,abort,jsonify
 from ..models import User,Player,Game,Question,Choices
 from .. import db
 from flask_login import login_required,current_user
@@ -137,6 +137,28 @@ def choices(question_id):
         db.session.commit()
         return redirect(url_for('.choices',question_id=question_id))
     return render_template('choices.html',title='Add choices')
+
+@main.route('/profile/bio/<uid>' , methods=['POST','GET'])
+@login_required
+def add_bio(uid):
+    user = User.query.filter_by(id = uid).first()
+    games = Game.query.filter_by(user_id=user.id).all()
+    # if current_user.id == uid:
+    if request.method == 'POST':
+        bio = request.form.get('bio')
+        if user == None:
+            abort(404)
+        else:
+            user.bio = bio
+            db.session.add(user)
+            db.session.commit()
+            return jsonify({'success':f'{bio}'})
+
+    # else:
+        # print('******4********')
+        # return render_template ( 'profile.html',user=user,games=games)
+    return render_template ( 'profile.html',user=user,games=games)
+
 
 # @main.route('/preview')
 # def preview():

@@ -62,4 +62,20 @@ $(document).ready(function(){
       });
       event.preventDefault()
    });
+
+
+   $("#new-bio").submit(function(event){
+
+     $.post('/profile/bio/'+$("#user_id").val()+'',
+     {
+       bio:$('#bio').val()
+     },
+     function(data){
+       if(data.success){
+         $('#final_bio').text(data.success)
+         $("#new-bio").hide()
+       }
+     });
+     event.preventDefault()
+   });
 });

@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
   $("#signupForm").submit(function(event){
     username =$("#username").val()
     email =$("#email").val()
@@ -41,4 +42,5 @@ $(document).ready(function(){
     });
     event.preventDefault()
   })
+
 });

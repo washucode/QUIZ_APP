@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
   $('#loginForm').submit(function(event){
     email = $("#email").val()
     password = $("#password").val()
@@ -19,4 +20,5 @@ $(document).ready(function(){
     });
     event.preventDefault()
   });
+
 });

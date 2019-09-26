@@ -32,7 +32,7 @@ def game(game_id,player_id):
     
     current_game = Game.query.get(game_id)
     player_id = player_id
-    return render_template('game.html',current_game = current_game,player_id)
+    return render_template('game.html',current_game = current_game,player_id=player_id)
 
 @main.route('/questions/<int:game_id>/<int:player_id>',methods=['GET','POST'])
 def do_questions(game_id,player_id):

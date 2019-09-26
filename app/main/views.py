@@ -15,7 +15,7 @@ def index():
         game_code = request.form.get('game_code')
         game = Game.query.filter_by(game_password=game_code).first()
         if game is not None:
-            return redirect(url_for('.game',game_id=game.id,player_id=current_player.id))
+            return redirect(url_for('main.game',game_id=game.id,player_id=current_player.id))
         else:
             flash('That game does not exist')
             return render_template('index.html')
@@ -77,13 +77,13 @@ def create_game(user_id):
         status = request.form.get('status')
         game_password = request.form.get('game_password')
 
-        new_game = Game(gamename=gamename,description=description,award=award,status=status,game_password=game_password,user_id=current_user)
+        new_game = Game(gamename=gamename,description=description,award=award,status=status,game_password=game_password,user_id=current_user.id)
         db.session.add(new_game)
         db.session.commit()
         game_id = Game.query.filter_by(gamename=gamename).first()
-        return redirect(url_for('.add_questions',game_id=game_id.id))
+        return redirect(url_for('main.add_questions',game_id=game_id.id))
 
-    return render_template('create.html')
+    return render_template('create_game.html')
 
 @main.route('/profile/<username>')
 @login_required

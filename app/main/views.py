@@ -159,6 +159,24 @@ def add_bio(uid):
         # return render_template ( 'profile.html',user=user,games=games)
     return render_template ( 'profile.html',user=user,games=games)
 
+@main.route('/profile/edit/bio/<uid>', methods=['POST','GET'])
+@login_required
+def update_bio(uid):
+    user = User.query.filter_by(id = uid).first()
+    games = Game.query.filter_by(user_id=user.id).all()
+    if request.method == 'POST':
+        changeBio = request.form.get("changeBio")
+        if user == None:
+            abort(404)
+        else:
+            print(changeBio)
+            user.bio = changeBio
+            db.session.add(user)
+            db.session.commit()
+            return jsonify({'passed':'Bio has been successfuly saved','success':f'{changeBio}'})
+    return render_template ( 'profile.html',user=user,games=games)
+
+
 
 # @main.route('/preview')
 # def preview():

@@ -79,6 +79,14 @@
   justify-content:center;
   align-items:center;
 }
+#edit,
+#close{
+  background:white;
+  padding:3px 10px;
+  border-radius:15px;
+  float:right;
+  cursor:pointer;
+}
 </style>
 <div id="my_msg">
 
@@ -86,7 +94,7 @@
 <div class="success">
   <img src="{{url_for('static', filename='tick.png')}}"  width="100px"alt="tick">
   <h3>SUCCESS</h3>
-  <small>Your password has ben successfuly changed</small>
+  <small id="msg">Your password has ben successfuly changed</small>
 </div>
 </div>
 </div>
@@ -116,12 +124,14 @@
   #}
   <h6 class="details">Bio</h6>
   {% if user.bio %}
-  <p>{{user.bio}}</p>
-  <small id = "edit">edit</small>
+  <small id = "edit" style="color:blue"> <i class="fas fa-pen"> edit</i> </small>
+  <small id = "close" style="color:red;display:none"> <i class="fas fa-times"></i> </small>
+
+  <p id="user_biom">{{user.bio}}</p>
   <br>
-  <form id="edit-bio">
+  <form id="edit-bio" style="display:none">
     <div class="form-group ">
-      <input type="text" id="change-bio" name="change-bio" class=" input form-control form-control-sm" value="{{user.bio}}" required>
+      <input type="text" id="changeBio" name="changeBio" class=" input form-control form-control-sm" value="{{user.bio}}" required>
       <button type="submit" class="btn btn-sm btn-primary">update</button>
     </div>
   </form>

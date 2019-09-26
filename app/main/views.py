@@ -61,7 +61,7 @@ def do_questions(game_id,player_id):
 
     return render_template('doquestions.html',questions = questions,choices=choices,player=player)
 
-@main.route('/creategame/<int:user_id>',methods=['GET','POST'])
+@main.route('/creategame/<int:user_id>',methods = ['POST','GET'])
 @login_required
 def create_game(user_id):
     '''
@@ -69,20 +69,27 @@ def create_game(user_id):
     Arg:
         user_id in order to assighn the question the foreign key to the user who created it
     '''
-
-    if request.method == 'post':
+   
+    if request.method == "POST":
+        
         gamename = request.form.get('gamename')
         description = request.form.get('description')
         award = request.form.get('award')
         status = request.form.get('status')
+        if status.lower() == "true" or status.lower() == "t":
+            status_real = True
+        elif status.lower() == 'false ' or status.lower() == "f":
+            status_real = False
+        else:
+            flash("Please enter valid input")
         game_password = request.form.get('game_password')
 
-        new_game = Game(gamename=gamename,description=description,award=award,status=status,game_password=game_password,user_id=current_user.id)
+        new_game = Game(gamename=gamename,description=description,award=award,status=status_real,game_password=game_password,user_id=current_user.id)
         db.session.add(new_game)
         db.session.commit()
         game_id = Game.query.filter_by(gamename=gamename).first()
-        return redirect(url_for('main.add_questions',game_id=game_id.id))
-
+        return redirect(url_for('.add_questions',game_id=game_id.id))
+        print(gamename)
     return render_template('create_game.html')
 
 @main.route('/profile/<username>')
@@ -107,19 +114,23 @@ def add_questions(game_id):
     Arg:
         game_id this will allow querying from the database for the game and store it as a foreign key in the questions object
     '''
-    current_game = Game.query.filter_by(game_id=game_id).first()
+    current_game = Game.query.filter_by(id=game_id).first()
+    print("====",current_game.id)
     game_questions = Question.query.filter_by(game_id=game_id).all()
-    if request.method == 'post':
+    print("++====",game_questions)
+    if request.method == 'POST':
         question = request.form.get('question')
+        print("-----",question)
         new_question = Question(question=question,game_id=current_game.id)
         db.session.add(new_question)
         db.session.commit()
+        print("----",new_question)
+        
+        return redirect(url_for('.add_questions',game_id=current_game.id))
 
-        return redirect(url_for('.add_question',game_id=game_id))
+    return render_template('add_questions.html',game_questions=game_questions,game_id=current_game.id)
 
-    return render_template('addquestions.html',game_questions=game_questions)
-
-@main.route('/choices/<int:question_id>')
+@main.route('/choices/<int:question_id>',methods=['POST','GET'])
 def choices(question_id):
     '''
     This method will add the choices to the  database to the questions created
@@ -127,15 +138,23 @@ def choices(question_id):
         question_id this will allow quering the db to access the question so as to store it as a foreign key in the choices table
     '''
     question = Question.query.get(question_id)
-    if request.method == 'post':
+    if request.method == 'POST':
         choice = request.form.get('choice')
         status = request.form.get('status')
         points = request.form.get('points')
-        new_choice = Choices(question_id=question,choice=choice,status=status,points=points)
+        status_real = True
+        if status.lower() == "true" or status.lower() == "t":
+            status_real = True
+        elif status.lower() == 'false ' or status.lower() == "f":
+            status_real = False
+        else:
+            flash("Please enter valid input")
+        new_choice = Choices(question_id=question.id,choice=choice,status=status_real,points=points)
         db.session.add(new_choice)
         db.session.commit()
-        return redirect(url_for('.choices',question_id=question_id))
-    return render_template('choices.html',title='Add choices')
+    
+        return redirect(url_for('.choices',question_id=question.id, game_id= question.game_id))
+    return render_template('choices.html',question_id=question.id, game_id= question.game_id)
 
 # @main.route('/preview')
 # def preview():

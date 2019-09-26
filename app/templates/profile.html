@@ -1,0 +1,185 @@
+{% extends 'base.html'%}
+{% block content%}
+{{super()}}
+<script type="text/javascript" src="{{url_for('static', filename='js/profile.js')}}">
+
+</script>
+<style media="screen">
+  .profile{
+    /* position:fixed; */
+    height:80vh;
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+  }
+  .profile *<{
+    filter:blur(10px)
+  }
+  .content{
+    position:absolute;
+    /* filter:blur(0px) */
+    /* z-index:9999999; */
+  }
+  .circle{
+    filter:blur(0);
+    border-radius:50%;
+  }
+  .input{
+    color:white;
+    border:solid 1px white;
+    background-color:transparent;
+    border-width:0 0 1px 0;
+    border-radius:0;
+  }
+.details:before{
+  content:'';
+  position:absolute;
+  top:0;
+  background-color:white;
+  height:100%;
+  width:100%;
+  z-index:-3;
+  transform:skew(-20deg);
+}
+.details{
+  position:relative;
+  right:20px;
+  width:200px;
+  font-weight:bold;
+  background:white;
+  color:purple;
+  padding:10px;
+  z-index:-1;
+}
+#my_msg{
+  display:none
+}
+.pwd-success{
+  height:88.4%;
+  position:absolute;
+  z-index:30;
+  display:flex;
+  background-color:rgba(0,0,0,.9);
+  /* flex-direction:column; */
+  justify-content:center;
+  align-items:center;
+}
+.success{
+  padding:10px;
+  text-align:center;
+  border-radius:12px;
+  background-color:white;
+  color:black;
+  width:200px ;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+</style>
+<div id="my_msg">
+
+<div id="pwd-success" class=" container-fluid pwd-success">
+<div class="success">
+  <img src="{{url_for('static', filename='tick.png')}}"  width="100px"alt="tick">
+  <h3>SUCCESS</h3>
+  <small>Your password has ben successfuly changed</small>
+</div>
+</div>
+</div>
+<!-- <link rel="stylesheet" href="{{url_for('static' , filename='css/profile.css')}}"> -->
+<div class="container-fluid">
+  <h3 class="text-center">Welcome {{current_user.username}}</h3>
+  <div class="row">
+    {% if user.profile_photo%}
+    <div class="col-md-3" style="background-image:{{url_for('static', filename='current_user.profile_photo')}}">
+      <img src="{{url_for('static', filename='current_user.profile_photo')}}" class="circle" alt="">
+    </div>
+    {% else %}
+    <div class="col-md-3 profile" style="background-image:url('{{url_for('static', filename='profile_photos.jpg')}}');overflow:hidden">
+        <img src="{{url_for('static', filename='profile_photo.jpg')}}" width="300px" class="circle" alt="">
+        <button type="button" class="btn btn-primary btn-sm" name="button"> change</button>
+    </div>
+    {% endif %}
+    <div class="col-md-6">
+    <h6 class="details">Username</h6>
+    {{user.username}}
+    <br><br>
+  {#
+  <h6>Email</h6>
+  {{user.email}}
+  <h6>Games</h6>
+  {{user.game.count()}}
+  #}
+  <h6 class="details">Bio</h6>
+  {% if user.bio %}
+  <p>{{user.bio}}</p>
+  <small id = "edit">edit</small>
+  <br>
+  <form id="edit-bio">
+    <div class="form-group ">
+      <input type="text" id="bio" name="bio" class=" input form-control form-control-sm" value="Add a bio">
+      <button type="submit" class="btn btn-sm btn-primary">Add</button>
+    </div>
+  </form>
+  {%else %}
+  <br>
+  <form id="bio">
+    <div class="form-group col-md-7">
+        <input type="text" id="bio" name="bio" class=" input form-control form-control-sm" value="Add a bio">
+      </div>
+        <button type="submit" class="btn btn-sm btn-primary">Add</button>
+  </form>
+  {% endif %}
+  <br>
+  <h5>Change Password</h5>
+  <br>
+  <form id="change-password">
+    <div class="form-row">
+      <small class="text-danger" id="main_error"></small>
+    <div class="form-group col-md-6">
+      <lable>Older Password</lable>
+      <input type="password" id="former_password" class=" input form-control form-control-sm" placeholder="Change Password" required>
+      <small class="text-danger" id="pwd_error"></small>
+    </div>
+    <div class="form-group col-md-6">
+      <lable>New Password</lable>
+      <input type="password" id="new_password" class=" input form-control form-control-sm" placeholder="New Password" required>
+    </div>
+  </div>
+  <br>
+  <div class="form-row">
+    <div id="after-pwd" style="display:none" class="form-group col-md-6">
+      <lable>New Password</lable>
+      <input type="password" id="new_password_confirm" class="input form-control form-control-sm" placeholder="Confirm New Password" required>
+      <small class="text-danger" id="pwd_conf_error"></small>
+      <input type="hidden" id="user_id" name="user_id" value="{{user.id}}">
+    </div>
+    <div class="from-group col-md-6"><br>
+      <button id="after-pwd_conf" style="display:none" type="submit" class="btn btn-sm btn-primary">Change</button>
+    </div>
+  </div>
+  </form>
+    </div>
+    <div class="col-md-3">
+      <h5>My Games</h5>
+      {% if user.game %}
+      {% for game in user.game %}
+        <h6>{{game.gamename}}</h6>
+        <h6>Game Code</h6>
+        <small>{{game.password}}</small>
+        <small class="copy"><i class="fas fa-clipboard"> copy</i></small>
+        {% endfor %}
+      {% else %}
+      <h5>Add games</h5>
+      <a href ='/creategame/current_user.id' type="button" name="button"></a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

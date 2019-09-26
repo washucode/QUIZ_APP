@@ -1,5 +1,5 @@
 from . import main
-from flask import render_template,request,redirect,url_for,flash
+from flask import render_template,request,redirect,url_for,flash,abort
 from ..models import User,Player,Game,Question,Choices
 from .. import db
 from flask_login import login_required,current_user
@@ -25,11 +25,11 @@ def index():
 def game(game_id,player_id):
     '''
     This method will query the database table games and render the game selected by the user
-    
+
     Arg:
         game_id will allow query the database table games and query by id
     '''
-    
+
     current_game = Game.query.get(game_id)
     player_id = player_id
     return render_template('game.html',current_game = current_game,player_id=player_id)
@@ -85,7 +85,7 @@ def create_game(user_id):
 
     return render_template('create.html')
 
-@main.route('/profile/<username>')
+@main.route('/profile/<username>', methods = ['POST','GET'])
 @login_required
 def profile(username):
     '''
@@ -93,11 +93,12 @@ def profile(username):
     Arg:
         username in order to query the user by username in the db
     '''
-    user = User.query.filter_by(username=username).first()
-    games = Game.query.filter_by(user_id=user.id).all()
-    
-
-    return render_template ( 'profile.html',user=user,games=games)
+    if current_user.username == username:
+        user = User.query.filter_by(username=username).first()
+        games = Game.query.filter_by(user_id=user.id).all()
+        return render_template ( 'profile.html',user=user,games=games)
+    else:
+        abort(404)
 
 
 @main.route('/questions/<int:game_id>',methods=['POST','GET'])
@@ -140,5 +141,3 @@ def choices(question_id):
 # @main.route('/preview')
 # def preview():
 #     questionspreview = Questions.query.get()
-
-

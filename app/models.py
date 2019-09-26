@@ -85,4 +85,3 @@ class Choices(db.Model):
     choice = db.Column(db.String,nullable=False)
     status = db.Column(db.Boolean)
     points = db.Column(db.Integer)
-    

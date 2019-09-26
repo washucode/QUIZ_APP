@@ -1,7 +1,7 @@
 from . import main
 from flask import render_template,request,redirect,url_for,flash,abort,jsonify
 from ..models import User,Player,Game,Question,Choices
-from .. import db
+from .. import db,photos
 from flask_login import login_required,current_user
 
 @main.route('/',methods=['GET','POST'])
@@ -177,7 +177,45 @@ def update_bio(uid):
     return render_template ( 'profile.html',user=user,games=games)
 
 
+@main.route('/profile/add_photo/<uid>', methods=['POST','GET'])
+@login_required
+def profile_photo(uid):
+    user = User.query.filter_by(id = uid).first()
+    games = Game.query.filter_by(user_id=user.id).all()
+    if request.method == 'POST':
+        if 'profilePic'  in request.files:
+            print('********1*')
+            filename = photos.save(request.files.get('profilePic'))
+            path = f'photos/{filename}'
+            print('*********',path)
+            if user == None:
+                abort(404)
+            else:
+                user.profile_photo = path
+                db.session.add(user)
+                db.session.commit()
 
+    return render_template ( 'profile.html',user=user,games=games)
+
+@main.route('/profile/update_photo/<uid>', methods=['POST','GET'])
+@login_required
+def update_profile_photo(uid):
+    user = User.query.filter_by(id = uid).first()
+    games = Game.query.filter_by(user_id=user.id).all()
+    if request.method == 'POST':
+        if 'UpdatePic'  in request.files:
+            print('********1*')
+            filename = photos.save(request.files.get('UpdatePic'))
+            path = f'photos/{filename}'
+            print('*********',path)
+            if user == None:
+                abort(404)
+            else:
+                user.profile_photo = path
+                db.session.add(user)
+                db.session.commit()
+
+    return render_template ( 'profile.html',user=user,games=games)
 # @main.route('/preview')
 # def preview():
 #     questionspreview = Questions.query.get()

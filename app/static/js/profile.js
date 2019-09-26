@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+
   $("#edit").click(function(){
     $("#edit").hide()
     $("#user_biom").slideToggle(300)
@@ -41,11 +42,8 @@ $(document).ready(function(){
    $("#new_password_confirm").click(function(){
      $("#after-pwd_conf").fadeIn(700)
    })
-   console.log($("#user_id").val());
    $("#change-password").submit(function(event){
-     console.log('older '+$('#former_password').val());
-     console.log('new '+$('#new_password').val());
-     console.log('new_c '+$('#new_password_confirm').val());
+    
      $.post('/profile/change/pwd/'+$("#user_id").val()+'',
       {
         former_password:$('#former_password').val(),

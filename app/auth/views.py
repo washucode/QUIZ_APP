@@ -79,7 +79,7 @@ def change_password(uid):
                         user.password_hash = generate_password_hash(new_password)
                         db.session.add(user)
                         db.session.commit()
-                        return jsonify({'changed':'Your password has ben successfuly changed'})
+                        return jsonify({'changed':'Your password has been successfuly changed'})
     else:
         abort(404)
 

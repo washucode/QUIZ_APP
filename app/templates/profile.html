@@ -87,6 +87,14 @@
   float:right;
   cursor:pointer;
 }
+#change{
+  background-color:white;
+  color:purple;
+  padding:5px 10px;
+  border-radius:25px;
+  cursor:pointer;
+}
+
 </style>
 <div id="my_msg">
 
@@ -103,13 +111,30 @@
   <h3 class="text-center">Welcome {{current_user.username}}</h3>
   <div class="row">
     {% if user.profile_photo%}
-    <div class="col-md-3" style="background-image:{{url_for('static', filename='current_user.profile_photo')}}">
-      <img src="{{url_for('static', filename='current_user.profile_photo')}}" class="circle" alt="">
+    <div class="col-md-3 profile" style="background-image:{{url_for('static', filename='current_user.profile_photo')}}">
+      <img src="{{url_for('static', filename=current_user.profile_photo)}}" width="250px" height="250px" class="circle" alt="">
+      <br>
+      <form id="photo_update" action="/profile/update_photo/{{user.id}}" method="post" enctype="multipart/form-data">
+        <label id="change" class="custom-file-upload">
+        <input type="file" style="width:0px" name="UpdatePic" id="UpdatePic" required>
+          <i class="fas fa-upload"> Add Photo</i>
+        </label><br>
+        <!-- <input type="file" class="form-control" name="profilePic" id="profilePic" style="width:130px" value=""><br>    -->
+        <button type="submit" class="btn btn-primary btn-sm" > update</button>
+      </form>
     </div>
     {% else %}
     <div class="col-md-3 profile" style="background-image:url('{{url_for('static', filename='profile_photos.jpg')}}');overflow:hidden">
         <img src="{{url_for('static', filename='profile_photo.jpg')}}" width="300px" class="circle" alt="">
-        <button type="button" class="btn btn-primary btn-sm" name="button"> change</button>
+        <br>
+        <form id="photo_upload" action="/profile/add_photo/{{user.id}}" method="post" enctype="multipart/form-data">
+          <label id="change" class="custom-file-upload">
+          <input type="file" style="width:0px" name="profilePic" id="profilePic" required>
+            <i class="fas fa-upload"> Add Photo</i>
+          </label><br>
+          <!-- <input type="file" class="form-control" name="profilePic" id="profilePic" style="width:130px" value=""><br>    -->
+          <button type="submit" class="btn btn-primary btn-sm" > submit</button>
+        </form>
     </div>
     {% endif %}
     <div class="col-md-6">
@@ -154,7 +179,7 @@
       <small class="text-danger" id="main_error"></small>
     <div class="form-group col-md-6">
       <lable>Older Password</lable>
-      <input type="password" id="former_password" class=" input form-control form-control-sm" placeholder="Change Password" required>
+      <input type="password" id="former_password" class=" input form-control form-control-sm" placeholder="Old Password" required>
       <small class="text-danger" id="pwd_error"></small>
     </div>
     <div class="form-group col-md-6">

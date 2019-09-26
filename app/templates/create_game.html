@@ -10,30 +10,39 @@
         <div class="col-md-8 createg">
             <h1 class ="heading2 mb-5">Cheza  <span id = "otherhalf2"> |Game</span></h1>
 
-            <form action="/creategame/{{current_user.id}}" method="post" class = "text-center">
+            <form action="{{url_for('main.create_game',user_id = current_user.id)}}" method="post" class = "text-center">
                 <!-- <small id="error"class="text-danger">display flash message</small> -->
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-danger">
+                    <button type = "button" class="close" data-dismiss = "alert">&times;</button>
+
+                    <small class="alert alert-danger">{{message}}</small>
+
+                </div>
+                
+                {% endfor %}
                 <div class="form-group mr-5 ml-5">
-                    <input type="name" class="form-control" id="playername" name = "gamename" placeholder="Enter name of your game">
+                    <input type="name" class="form-control" id="playername" name = "gamename" placeholder="Enter name of your game" required>
                 </div>
                 <div class="form-group mr-5 ml-5">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" name = "description"rows="3" placeholder="Enter a short description"></textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" name = "description"rows="3" placeholder="Enter a short description" required></textarea>
                 </div>
                 <div class="form-group mr-5 ml-5">
                     <label for="exampleInputPassword1">Does You game have any cash rewards or other rewards?</label>
-                    <input type="reward" class="form-control" id="exampleInputPassword1" name = "award" placeholder="Enter Reward(specify currency type if cash reward)">
+                    <input type="text" class="form-control"name = "award" placeholder="Enter Reward(specify currency type if cash reward)" required>
                 </div>
 
                 <div class="form-group mr-5 ml-5">
                         <label for="exampleInputPassword1">Is your game still on?</label>
-                        <input type="status" class="form-control" id="exampleInputPassword1" name = "status" placeholder="Enter True/T for on  or False/F for off">
+                        <input type="status" class="form-control" id="exampleInputPassword1" name = "status" placeholder="Enter True/T for on  or False/F for off" required>
                 </div>
              
                 <div class="form-group mr-5 ml-5">
                         <label for="exampleInputPassword1">Enter your game code</label>
-                        <input type="status" class="form-control" id="exampleInputPassword1" name = "game_password" placeholder="Enter gamecode for players">
+                        <input type="password" class="form-control" id="exampleInputPassword1" name = "game_password" placeholder="Enter gamecode for players" required>
                 </div>
              
-                <a type="submit" class=" submitbtn btn btn-sm  mb-5" style= "font-size: 16px;">Next</a>
+                <button type="submit" class=" submitbtn btn btn-sm  mb-5" style= "font-size: 16px;">Next</button>
 
             </form>
             

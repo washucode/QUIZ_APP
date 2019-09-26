@@ -5,7 +5,20 @@
     </button>
     <div class="collapse navbar-collapse navbar-right" id="navbarNav" >
       <ul class="navbar-nav">
-        {%if not current_user%}
+        {%if current_user.is_authenticated%}
+        <li class="nav-item" >
+          <a class="btn text-white btn-sm" href="#" ><span class = "navbtn text-white"> CREATE GAME</span> </a>
+        </li>
+        <li class="nav-item">
+          <a class=" btn text-white btn-sm" href="#"><span class = "navbtn text-white">Hi, {{current_user.username}}</span> </a>
+        </li>
+        <li class="nav-item">
+            <a class=" btn text-white btn-sm" href="#"><span class = "navbtn text-white">Profile</span> </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link btn text-white btn-sm" href="{{url_for('auth.logout')}}"><span class = "navbtn">LOGOUT</span> </a>
+        </li>
+        {%else%}
         <li class="nav-item" >
           <a class="btn text-white btn-sm" href="#" ><span class = "navbtn text-white"> CREATE GAME</span> </a>
         </li>
@@ -15,19 +28,7 @@
         <li class="nav-item">
             <a class="nav-link btn text-white btn-sm" href="{{url_for('auth.login')}}"><span class = "navbtn">LOGIN</span> </a>
         </li>
-        {%elif current_user%}
-          <li class="nav-item" >
-            <a class="btn text-white btn-sm" href="#" ><span class = "navbtn text-white"> CREATE GAME</span> </a>
-          </li>
-          <li class="nav-item">
-            <a class=" btn text-white btn-sm" href="#"><span class = "navbtn text-white">Hi, {{current_user.username}}</span> </a>
-          </li>
-          <li class="nav-item">
-              <a class=" btn text-white btn-sm" href="#"><span class = "navbtn text-white">Profile</span> </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link btn text-white btn-sm" href="{{url_for('auth.logout')}}"><span class = "navbtn">LOGOUT</span> </a>
-          </li>
+     
       {%endif%}
        
       </ul>

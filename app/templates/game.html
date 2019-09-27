@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+
+
+<div class="container text-center mt-2">
+
+
+    <div class="row mt-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 createg mt-5" " >
+           
+
+            <h1 class ="heading2 mb-5 mt-5">Cheza  <span id = "otherhalf3"> |Game</span></h1>
+            {%if current_game%}
+             <h2 class= "text-center"><i class="fas fa-gamepad"> </i>  {{current_game.gamename|capitalize}}</h2>
+             <h5> <i class="fas fa-info-circle"></i>  About: {{current_game.description}}</h5>
+             <h5><i class="fas fa-medal"></i>  Award : {{current_game.award}}</h5>
+             <h5>Status : {{current_game.status}}</h5>
+
+             <a href="{{url_for('main.do_questions',game_id=current_game.id, player_id=player_id)}}" class = "btn btn-md mb-5" style="background-color: #2c2c54">Play</a>
+            {%endif%}
+            
+        
+            
+            
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            
+
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+{% endblock %}

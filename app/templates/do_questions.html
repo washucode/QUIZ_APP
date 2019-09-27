@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+<div class="container">
+  <br>
+  <div class="row">
+<div class="col-md-8">
+  <div class="row">
+    <div class="col-md-1 mr-4">
+      {% if game.user.profile_photo%}
+      <img src="{{url_for('static', filename=game.user.profile_photo )}}" width="70px" height="70px" class="circle" alt="">
+      {% else %}
+      <img src="{{url_for('static', filename='profile_photo.jpg')}}" width="300px" class="circle" alt="">
+      {% endif %}
+    </div>
+    <div class="col-md-10">
+      <small> <strong>Posted By</strong> {{ game.user.username | capitalize}}</small><br>
+      <small>
+        <strong>Description</strong> <br>
+        {{game.description}}
+      </small>
+    </div>
+  </div>
+  <form action="/questions/{{game.id}}/{{player.id}}" method="post">
+<ol>
+
+  {% for question in questions %}
+  <br>
+  <li>
+
+   <i style="color:#2c2c54;font-size:20px;float:right" class="fas fa-question-circle"></i>
+  <h5> {{question.question}}</h5>
+    {% for choice in question.choices %}
+    <div class="from-group">
+    <lable> <small>{{choice.choice}} </small></lable>
+    <input type="radio" name="{{choice.question_id}}" id="{{choice.id}}" value="{{choice.points}}" required>
+  </div>
+</li>
+  {% endfor %}
+  {% endfor %}
+</ol>
+  <button type="submit" class="btn btn-primary btn-sm">submit</button>
+</form>
+
+</div>
+<div class="col-md-4" style="position:fixed;right:0;">
+  <h6>Player Board <i style="color:yellow" class="fas fa-trophy" ></i></h6>
+  <ol>
+
+
+    {% for player in game.player %}
+    {% if player.results  == None%}
+    {% else %}
+    <li>
+    <small>{{player.player_name}}</small>
+    <small>{{player.results}}</small>
+  </li>
+
+    {% endif %}
+{% endfor %}
+</ol>
+</div>
+</div>
+
+</div>
+
+{% endblock %}

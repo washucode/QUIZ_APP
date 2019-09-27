@@ -15,9 +15,11 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(255),unique=True,nullable=False)
     email = db.Column(db.String(255),unique=True,nullable=False)
     password_hash = db.Column(db.String,nullable=False)
+    profile_photo = db.Column(db.String, nullable = True)
+    bio = db.Column(db.Text,nullable = True)
     game = db.relationship('Game',backref='user',lazy='dynamic')
 
-    
+
     def generate_password(self,password):
         '''
         Generates password hash
@@ -55,7 +57,9 @@ class Game(db.Model):
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     game_password = db.Column(db.String,nullable=False)
     questions = db.relationship('Question',backref='game',lazy='dynamic')
+
     player = db.relationship('Player',backref='game',lazy='dynamic')
+
 
 class Question(db.Model):
     '''
@@ -77,4 +81,3 @@ class Choices(db.Model):
     choice = db.Column(db.String,nullable=False)
     status = db.Column(db.Boolean)
     points = db.Column(db.Integer)
-    

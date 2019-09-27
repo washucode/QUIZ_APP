@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-light" style = "background-color:#2c2c54" >
+  <div class="collapse navbar-collapse" id="navbarNav" >
+    <ul class="navbar-nav mr-auto">
+      {%if current_user.is_authenticated%}
+      <li class="nav-item" >
+        <a class="btn text-white btn-sm" href="/" ><span class = "navbtn text-white" style = "background-color:  #40407a;
+    font-size: 18px;">HOME</span> </a>
+      </li>
+      <li class="nav-item" >
+        <a class="btn text-white btn-sm" href="/creategame/{{current_user.id}}" ><span class = "navbtn text-white"> CREATE GAME</span> </a>
+      </li>
+      
+      
+      {%else%}
+      <li class="nav-item" >
+        <a class="btn text-white btn-sm" href="/" ><span class = "navbtn text-white">HOME</span> </a>
+      </li>
+      <li class="nav-item" >
+        <a class="btn text-white btn-sm" href="/creategame/{{current_user.id}}" ><span class = "navbtn text-white"> CREATE GAME</span> </a>
+      </li>
+   
+    {%endif%}
+     
+    </ul>
+  </div>
+
+  
+    <a class="navbar-brand" style= "font-size:35px;">Cheza <span id = "brand" style = "color:#120639 ">|Game</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav" >
+      <ul class="navbar-nav ml-auto">
+        {%if current_user.is_authenticated%}
+        
+        <li class="nav-item">
+          <a class=" btn text-white btn-sm" href="#"><span class = "navbtn text-white">Hi, {{current_user.username}}</span> </a>
+        </li>
+        <li class="nav-item">
+            <a class=" btn text-white btn-sm" href="/profile/{{current_user.username}}"><span class = "navbtn text-white">Profile</span> </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link btn text-white btn-sm" href="{{url_for('auth.logout')}}"><span class = "navbtn">LOGOUT</span> </a>
+        </li>
+        {%else%}
+        
+        <li class="nav-item">
+          <a class=" btn text-white btn-sm" href="{{url_for('auth.signup')}}"><span class = "navbtn text-white">REGISTER</span> </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link btn text-white btn-sm" href="{{url_for('auth.login')}}"><span class = "navbtn">LOGIN</span> </a>
+        </li>
+     
+      {%endif%}
+       
+      </ul>
+    </div>
+  
+</nav>

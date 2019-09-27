@@ -8,14 +8,13 @@ from flask_login import login_required,current_user
 def index():
     if request.method == 'POST':
         player_name = request.form.get('player_name')
-        player = Player(player_name=player_name)
-        db.session.add(player)
-        db.session.commit()
-        current_player = Player.query.filter_by(player_name=player_name).first()
         game_code = request.form.get('game_code')
         game = Game.query.filter_by(game_password=game_code).first()
         if game is not None:
-            return redirect(url_for('main.game',game_id=game.id,player_id=current_player.id))
+            player = Player(player_name=player_name, game_id=game.id)
+            db.session.add(player)
+            db.session.commit()
+            return redirect(url_for('main.game',game_id=game.id,player_id=player.id))
         else:
             flash('That game does not exist')
             return render_template('index.html')
@@ -43,23 +42,25 @@ def do_questions(game_id,player_id):
         the game id to allow it to query the table questions and query the questions related to the game
         player_id to allow capture of results and link them to the player
     '''
-
+    game = Game.query.filter_by(id = game_id).first()
     player = Player.query.filter_by(id = player_id).first()
-    # players = Player.query.
-    questions = Question.query.filter_by(game_id = game_id).all()
-    for question in questions:
-        choices = Choice.query.filter_by(question_id = question).all()
-    if request.method == 'post':
-        counter = 0
-        choice_answers = request.form.getlist('choices')
-        for choice in choice_answers:
-            if choice == True:
-                counter += 1
-                results = counter
-            player.results = results
-            db.session.commit()
+    players = game.player
 
-    return render_template('doquestions.html',questions = questions,choices=choices,player=player)
+    questions = Question.query.filter_by(game_id = game_id).all()
+
+    if request.method == 'POST':
+        counter = 0
+        q_id=[]
+        for que in questions:
+            q_id.append(que.id)
+        selected = []
+        for id in q_id:
+            selected.append(int(request.form.get(str(id))))
+        player.results = sum(selected)
+        db.session.commit()
+
+
+    return render_template('do_questions.html',game=game,questions = questions,player=player)
 
 @main.route('/creategame/<int:user_id>',methods = ['POST','GET'])
 @login_required
@@ -69,9 +70,9 @@ def create_game(user_id):
     Arg:
         user_id in order to assighn the question the foreign key to the user who created it
     '''
-   
+
     if request.method == "POST":
-        
+
         gamename = request.form.get('gamename')
         description = request.form.get('description')
         award = request.form.get('award')
@@ -119,7 +120,7 @@ def add_questions(game_id):
     current_player = Player.query.get(game_id)
     print("====",current_player)
     game_questions = Question.query.filter_by(game_id=game_id).all()
-   
+
     if request.method == 'POST':
         question = request.form.get('question')
         print("-----",question)
@@ -127,7 +128,7 @@ def add_questions(game_id):
         db.session.add(new_question)
         db.session.commit()
         print("----",new_question)
-        
+
         return redirect(url_for('.add_questions',game_id=current_game.id))
 
     return render_template('add_questions.html',game_questions=game_questions,game_id=current_game.id)
@@ -154,7 +155,7 @@ def choices(question_id):
         new_choice = Choices(question_id=question.id,choice=choice,status=status_real,points=points)
         db.session.add(new_choice)
         db.session.commit()
-    
+
         return redirect(url_for('.choices',question_id=question.id, game_id= question.game_id))
     return render_template('choices.html',question_id=question.id, game_id= question.game_id)
 
@@ -163,7 +164,6 @@ def choices(question_id):
 def add_bio(uid):
     user = User.query.filter_by(id = uid).first()
     games = Game.query.filter_by(user_id=user.id).all()
-    # if current_user.id == uid:
     if request.method == 'POST':
         bio = request.form.get('bio')
         if user == None:
@@ -174,9 +174,6 @@ def add_bio(uid):
             db.session.commit()
             return jsonify({'success':f'{bio}'})
 
-    # else:
-        # print('******4********')
-        # return render_template ( 'profile.html',user=user,games=games)
     return render_template ( 'profile.html',user=user,games=games)
 
 @main.route('/profile/edit/bio/<uid>', methods=['POST','GET'])
@@ -236,6 +233,3 @@ def update_profile_photo(uid):
                 db.session.commit()
 
     return render_template ( 'profile.html',user=user,games=games)
-# @main.route('/preview')
-# def preview():
-#     questionspreview = Questions.query.get()

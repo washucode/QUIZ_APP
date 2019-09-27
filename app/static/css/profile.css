@@ -1,0 +1,10 @@
+.profile{
+  z-index:-1;
+  height:70vh;
+  background-size:contain;
+
+}
+
+.circle{
+  border-radius:50%;
+}

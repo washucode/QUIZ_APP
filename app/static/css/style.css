@@ -44,9 +44,20 @@ body{
     font-family: 'Cabin Sketch', cursive;
     font-size:120px;
 }
+.heading2{
+    font-family: 'Cabin Sketch', cursive;
+    font-size:90px;
+}
 #otherhalf{
     color:#2c2c54;
     font-size: 150px;
+}
+#otherhalf2{
+    color:#2c2c54;
+    font-size: 100px;
+}
+.createg{
+    background-color: #120639;
 }
 
 .htoplay{

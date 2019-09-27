@@ -43,7 +43,7 @@ $(document).ready(function(){
      $("#after-pwd_conf").fadeIn(700)
    })
    $("#change-password").submit(function(event){
-    
+
      $.post('/profile/change/pwd/'+$("#user_id").val()+'',
       {
         former_password:$('#former_password').val(),
@@ -98,6 +98,8 @@ $(document).ready(function(){
      },
      function(data){
        if(data.success){
+         $("#msg").text("Bio has been successfuly changed")
+         $("#my_msg").fadeIn(200).delay(2000).fadeOut(200)
          $('#final_bio').text(data.success)
          $("#new-bio").hide()
        }

@@ -94,7 +94,20 @@
   border-radius:25px;
   cursor:pointer;
 }
+.add-game{
+  height:90%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 
+}
+.add-game a{
+color:white;
+}
+.add-game .fas{
+  font-size:30px
+}
 </style>
 <div id="my_msg">
 
@@ -202,17 +215,21 @@
   </form>
     </div>
     <div class="col-md-3">
-      <h5>My Games</h5>
-      {% if user.game %}
-      {% for game in user.game %}
+      <h5 style="text-align:center">My Games</h5>
+      {% if games %}
+      {% for game in games %}
         <h6>{{game.gamename}}</h6>
         <h6>Game Code</h6>
         <small>{{game.password}}</small>
-        <small class="copy"><i class="fas fa-clipboard"> copy</i></small>
+        <small class="copy"><i class="fas fa-clipboard"></i></small>
         {% endfor %}
       {% else %}
-      <h5>Add games</h5>
-      <a href ='/creategame/current_user.id' type="button" name="button"></a>
+      <div class="container-fluid add-game">
+        <a href ='/creategame/{{current_user.id}}'>
+          <i class="fas fa-gamepad"></i><br>
+         </a>
+        <a href ='/creategame/{{current_user.id}}'>.. Add Game .. </a>
+      </div>
       {% endif %}
     </div>
   </div>

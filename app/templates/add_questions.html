@@ -27,11 +27,13 @@
                     {%if game_questions%}
                     {%for question in game_questions%}
                     <div class="panel-body">
-                        <h5>Question {{question.id}}: {{question.question}} <a class="submitbtn btn btn-sm" href = "{{url_for('main.choices',question_id = question.id)}}">Add Choices</a></h5>
+                        <h5>Question {{question.id}}: {{question.question}} <a class="submitbtn btn btn-sm"  style= "font-size: 12px;"href = "{{url_for('main.choices',question_id = question.id)}}">Add Choices</a></h5>
                     </div>
                     {%endfor%}
                     {%endif%}
             </div>
+            <small class = "mt-5">***When done setting questions and respective choices see preview:***</small><br>
+            <a type="submit" href = "{{url_for('main.index')}}" class=" submitbtn btn btn-sm  mb-5 " style= "font-size: 12px;" href= >Finish</a>
             
         </div>
         <div class="col-md-2"></div>

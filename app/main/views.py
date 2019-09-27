@@ -115,9 +115,10 @@ def add_questions(game_id):
         game_id this will allow querying from the database for the game and store it as a foreign key in the questions object
     '''
     current_game = Game.query.filter_by(id=game_id).first()
-    print("====",current_game.id)
+    current_player = Player.query.get(game_id)
+    print("====",current_player)
     game_questions = Question.query.filter_by(game_id=game_id).all()
-    print("++====",game_questions)
+   
     if request.method == 'POST':
         question = request.form.get('question')
         print("-----",question)

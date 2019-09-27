@@ -108,6 +108,9 @@ color:white;
 .add-game .fas{
   font-size:30px
 }
+.game{
+  /* color:purple; */
+}
 </style>
 <div id="my_msg">
 
@@ -214,14 +217,14 @@ color:white;
   </div>
   </form>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3" style="overflow:auto">
       <h5 style="text-align:center">My Games</h5>
       {% if games %}
       {% for game in games %}
-        <h6>{{game.gamename}}</h6>
-        <h6>Game Code</h6>
-        <small>{{game.password}}</small>
-        <small class="copy"><i class="fas fa-clipboard"></i></small>
+        <h6 class="game"><i class="fas fa-gamepad"></i> {{game.gamename}}</h6>
+        <small>{{game.description}}</small><br>
+        <small>Game Code - {{game.game_password}}</small>
+        <hr style="color:white">
         {% endfor %}
       {% else %}
       <div class="container-fluid add-game">

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 offset-md-1 createg">
+            <form action="{{url_for('main.choices', question_id = question_id)}}" method= "POST" class = "text-center">
+                    <h1 class ="heading2 mb-5">Cheza  <span id = "otherhalf2"> |Game</span></h1>
+                    <h3 class ="text-center mb-5" > Enter Choice</h3>
+            <div class="form-check form-check-inline">
+                <input type="text" class="form-control" name = "choice" placeholder="Enter Choice ">
+              
+            </div>
+            <br>
+            <br>
+            <div class="form-group form-check-inline">
+                    <label for="exampleFormControlSelect1">Select True if choice is right otherwise False</label>
+                    <select class="form-control" id="exampleFormControlSelect1" name ="status" required>
+                      <option>True</option>
+                      <option>False</option>
+                      
+                    </select>
+               
+            </div>
+           
+            <br>
+            <br>
+            <div class="form-check form-check-inline mr-3" >
+                    <label class="form-check-label mr-4" for="inlineRadio2">Enter choice points</label>
+                    <input type="number" class="form-control" name ="points" placeholder="Points in digit form " required> 
+            </div>
+            <br>
+            <br>
+            <br>
+            <button class="submitbtn btn btn-md mb-3"> Add Another Choice</button>
+          
+            <a class="submitbtn btn btn-md mb-5" type = "submit" href ="{{url_for('main.add_questions',game_id=game_id)}}">Finish</a>
+          
+        
+        </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

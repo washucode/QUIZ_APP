@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container text-center mt-2">
+    
+    
+    <div class="row mt-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 createg">
+            <h1 class ="heading2 mb-5">Cheza  <span id = "otherhalf2"> |Game</span></h1>
+
+            <form action="" method="POST" class = "text-center">
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-danger">
+                    <button type = "button" class="close" data-dismiss = "alert">&times;</button>
+
+                    <small class="alert alert-danger">{{message}}</small>
+
+                </div>
+                
+                {% endfor %}
+                
+
+            </form>
+            
+            
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            
+
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+{% endblock %}
+

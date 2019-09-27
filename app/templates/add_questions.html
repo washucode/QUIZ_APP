@@ -12,7 +12,15 @@
 
             <form action="{{url_for('main.add_questions', game_id = game_id)}}" method="POST" class = "text-center">
                 <!-- <small id="error"class="text-danger">display flash message</small> -->
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-danger">
+                    <button type = "button" class="close" data-dismiss = "alert">&times;</button>
+
+                    <small class="alert alert-danger">{{message}}</small>
+
+                </div>
                 
+                {% endfor %}
                 <div class="form-group mr-5 ml-5">
                     <label for="exampleInputPassword1">Add Question</label>
                     <input type="text" class="form-control"name ="question" placeholder="Add question">

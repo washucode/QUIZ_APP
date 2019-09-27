@@ -6,7 +6,7 @@ from flask_login import login_required,current_user
 
 @main.route('/',methods=['GET','POST'])
 def index():
-    if request.method == 'post':
+    if request.method == 'POST':
         player_name = request.form.get('player_name')
         player = Player(player_name=player_name)
         db.session.add(player)

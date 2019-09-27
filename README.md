@@ -4,10 +4,10 @@ This is a game app that helps people test knowledge of friends,family,students e
 
 ## Screenshots
 * Homepage of the application
-![Home Page](///app/static/rmpics/Homepage.png)
+![Home Page](../static/rmpics/Homepage.png)
 
 * Profile Page of the creator
-![Profile Page](///app/static/rmpics/profilepage.png)
+![Profile Page](../static/rmpics/profilepage.png)
 
 ## User Stories
 

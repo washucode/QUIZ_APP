@@ -3,8 +3,8 @@
 {% block content %}
 
 <div class="container text-center mt-2">
-    
-    
+
+
     <div class="row mt-5">
         <div class="col-md-2"></div>
         <div class="col-md-8 createg">
@@ -15,7 +15,7 @@
              <h5>Award : {{current_game.award}}</h5>
              <h5>Status : {{current_game.status}}</h5>
             {%endif%}
-        <a href="{{url_for('main.add_questions',game_id=current_game.id, player_id=player_id)}}">Play</a>
+        <a href="{{url_for('main.do_questions',game_id=current_game.id, player_id=player_id)}}">Play</a>
     </div>
     <div class="col-md-2"></div>
     </div>
@@ -23,4 +23,3 @@
 </div>
 
 {% endblock %}
-

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container text-center mt-2">
+    
+    
+    <div class="row mt-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 createg">
+            <h1 class ="heading2 mb-5">Cheza  <span id = "otherhalf2"> |Game</span></h1>
+
+            <form action="{{url_for('main.add_questions', game_id = game_id)}}" method="POST" class = "text-center">
+                <!-- <small id="error"class="text-danger">display flash message</small> -->
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-danger">
+                    <button type = "button" class="close" data-dismiss = "alert">&times;</button>
+
+                    <small class="alert alert-danger">{{message}}</small>
+
+                </div>
+                
+                {% endfor %}
+                <div class="form-group mr-5 ml-5">
+                    <label for="exampleInputPassword1">Add Question</label>
+                    <input type="text" class="form-control"name ="question" placeholder="Add question">
+                </div>
+
+                
+             
+                <button type="submit" class=" submitbtn btn btn-sm  mb-5" style= "font-size: 16px;">Add</button>
+
+            </form>
+            <div class="panel panel-default">
+                    {%if game_questions%}
+                    {%for question in game_questions%}
+                    <div class="panel-body">
+                        <h5>Question {{question.id}}: {{question.question}} <a class="submitbtn btn btn-sm"  style= "font-size: 12px;"href = "{{url_for('main.choices',question_id = question.id)}}">Add Choices</a></h5>
+                    </div>
+                    {%endfor%}
+                    {%endif%}
+            </div>
+            <small class = "mt-5">***When done setting questions and respective choices see preview:***</small><br>
+            <a type="submit" href = "{{url_for('main.index')}}" class=" submitbtn btn btn-sm  mb-5 " style= "font-size: 12px;" href= >Finish</a>
+            
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            
+
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+{% endblock %}
+

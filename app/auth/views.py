@@ -53,6 +53,36 @@ def signup():
             db.session.commit()
             return jsonify({'awesome':True})
         return render_template('auth/signup.html')
+
+@auth.route('/profile/change/pwd/<uid>', methods=['POST','GET'])
+@login_required
+def change_password(uid):
+    if current_user.is_authenticated:
+        if request.method == 'POST':
+            form = request.form
+            former_password = form.get('former_password')
+            new_password = form.get('new_password')
+            confirm_new_password = form.get('confirm_new_password')
+            user = User.query.filter_by(id = uid).first()
+            if user == None:
+                abort(404)
+            else:
+                if check_password_hash(user.password_hash,former_password) == False:
+                    return jsonify({'invalid':'Invalid password'})
+                else:
+                    if new_password != confirm_new_password:
+                        return jsonify({'notmatch':'Passwords dont match'})
+                    if former_password == new_password:
+                        return jsonify({'equalToOld':'The new password should be different from the old password'})
+
+                    else:
+                        user.password_hash = generate_password_hash(new_password)
+                        db.session.add(user)
+                        db.session.commit()
+                        return jsonify({'changed':'Your password has been successfuly changed'})
+    else:
+        abort(404)
+
 @auth.route('/logout')
 @login_required
 def logout():
